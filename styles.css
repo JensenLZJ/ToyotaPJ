@@ -1,0 +1,1810 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    border-bottom: 3px solid #dc2626;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* Logo Section */
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.toyota-logo {
+    display: flex;
+    align-items: center;
+}
+
+.toyota-logo-img {
+    height: 60px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+/* Navigation Section */
+.nav-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+/* Top Navigation */
+.top-nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.top-nav .nav-link {
+    font-size: 12px;
+    color: #6b7280;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.top-nav .nav-link:hover {
+    color: #dc2626;
+}
+
+.top-nav .nav-link.external {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.top-nav .nav-link.external i {
+    font-size: 10px;
+}
+
+.top-nav .nav-link.whatsapp-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #25d366;
+    font-weight: 600;
+}
+
+.top-nav .nav-link.whatsapp-nav:hover {
+    color: #128c7e;
+}
+
+.top-nav .nav-link.whatsapp-nav i {
+    font-size: 14px;
+}
+
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.main-nav .nav-link {
+    font-size: 14px;
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.main-nav .nav-link:hover {
+    color: #dc2626;
+}
+
+.main-nav .nav-link i {
+    font-size: 10px;
+}
+
+.search-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.search-link:hover {
+    color: #dc2626;
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 3px;
+}
+
+.mobile-toggle span {
+    width: 25px;
+    height: 2px;
+    background: #000;
+    transition: 0.3s;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .top-nav {
+        gap: 15px;
+    }
+    
+    .main-nav {
+        gap: 20px;
+    }
+    
+    .top-nav .nav-link {
+        font-size: 11px;
+    }
+    
+    .main-nav .nav-link {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-section {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        padding: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+    
+    .nav-section.active {
+        display: flex;
+    }
+    
+    .top-nav {
+        flex-direction: column;
+        gap: 15px;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 15px;
+    }
+    
+    .main-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .mobile-toggle {
+        display: flex;
+    }
+    
+    .header-content {
+        padding: 15px 0;
+    }
+    
+    .toyota-logo-img {
+        height: 45px;
+        max-width: 150px;
+    }
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.slide-content {
+    text-align: left;
+    max-width: 600px;
+    margin-left: 50px;
+    margin-right: auto;
+}
+
+.slide-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: white;
+    line-height: 1;
+}
+
+.slide-content h2 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: white;
+    line-height: 1;
+}
+
+.slide-content p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    color: white;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.explore-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.explore-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+.carousel-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.carousel-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-btn:hover {
+    opacity: 0.7;
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 0;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+/* About Section */
+.about {
+    padding: 100px 0;
+    background: #f9fafb;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    color: #1f2937;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Bank Cards */
+.bank-cards {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.bank-cards h3 {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.bank-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.bank-card {
+    background: #f8fafc;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.bank-card:hover {
+    border-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 38, 38, 0.1);
+}
+
+.bank-logo {
+    max-width: 100%;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #dc2626;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Qualification Section */
+.qualification {
+    padding: 80px 0;
+    background: #dc2626;
+    color: white;
+    text-align: center;
+}
+
+.qualification-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.qualification-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.qualification-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+/* GR/G-Limited Models Section */
+.gr-models {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: white;
+}
+
+.gr-models h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Featured GR Card */
+.gr-featured-card {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ff0000;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.gr-featured-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(255, 0, 0, 0.3);
+    border-color: #ff3333;
+}
+
+.gr-featured-image {
+    flex: 1;
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+}
+
+.gr-featured-image h3,
+.gr-featured-image .price {
+    display: none !important;
+}
+
+.gr-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gr-featured-card:hover .gr-featured-image img {
+    transform: scale(1.05);
+}
+
+
+.gr-featured-image .gr-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #ff0000;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 3;
+}
+
+.gr-featured-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.gr-featured-content h3 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    align-self: flex-start;
+}
+
+.gr-featured-content .price {
+    font-size: 1.4rem;
+    color: #ffd700;
+    margin: 0 0 30px 0;
+    padding: 0;
+    font-weight: 700;
+    position: static !important;
+    text-shadow: none !important;
+    align-self: flex-start;
+}
+
+.promo-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 3;
+}
+
+.promo-tag .discount {
+    background: #ff0000;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.promo-tag .free-service {
+    background: #00ff00;
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gr-featured-content .description {
+    font-size: 1.1rem;
+    color: #e5e5e5;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+}
+
+.gr-featured-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-self: stretch;
+    margin-top: auto;
+    width: 100%;
+}
+
+.gr-featured-actions .btn-brochure,
+.gr-featured-actions .btn-pricelist,
+.gr-featured-actions .btn-whatsapp {
+    flex: 1 !important;
+    width: auto !important;
+    min-width: 120px;
+    padding: 12px 20px;
+    border: 1px solid #fff;
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    background: transparent;
+    color: #fff;
+}
+
+.gr-featured-actions .btn-brochure:hover,
+.gr-featured-actions .btn-pricelist:hover {
+    background: #fff;
+    color: #000;
+}
+
+.gr-featured-actions .btn-whatsapp {
+    background: #25d366;
+    border-color: #25d366;
+    color: #fff;
+}
+
+.gr-featured-actions .btn-whatsapp:hover {
+    background: #128c7e;
+    border-color: #128c7e;
+}
+
+.gr-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ff0000;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.gr-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(255, 0, 0, 0.3);
+    border-color: #ff3333;
+}
+
+.gr-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff0000;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 3;
+}
+
+.gr-badge.g-limited {
+    background: #ffa500;
+    color: #000;
+}
+
+.gr-card .model-image {
+    position: relative;
+    overflow: hidden;
+    height: 280px;
+}
+
+.gr-card .model-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    z-index: 1;
+}
+
+.gr-card h3 {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    right: auto;
+    color: white;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.gr-card .price {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: auto;
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    z-index: 2;
+}
+
+/* Models Section */
+.models {
+    padding: 100px 0;
+    background: white;
+}
+
+.models h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #1f2937;
+    margin-bottom: 60px;
+}
+
+.models-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.model-card {
+    background: white;
+    text-align: center;
+    padding: 0;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.model-card:hover {
+    transform: translateY(-5px);
+}
+
+.model-image {
+    height: 280px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.model-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+}
+
+.model-card:hover .model-image img {
+    transform: scale(1.05);
+}
+
+.model-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    z-index: 1;
+}
+
+.model-card h3 {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    right: auto;
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.price {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: auto;
+    font-size: 1.4rem;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.model-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    padding: 0;
+    width: 100%;
+}
+
+.btn-brochure, .btn-pricelist, .btn-whatsapp {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-brochure, .btn-pricelist {
+    background: white;
+    color: #000;
+}
+
+.btn-brochure:hover, .btn-pricelist:hover {
+    background: #000;
+    color: white;
+}
+
+.btn-whatsapp {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+}
+
+.btn-whatsapp:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+}
+
+/* Testimonials Section */
+.testimonials {
+    padding: 100px 0;
+    background: #f9fafb;
+}
+
+.testimonials h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.testimonials h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #6b7280;
+    margin-bottom: 60px;
+    font-weight: 300;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-content p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.testimonial-author strong {
+    color: #1f2937;
+    font-size: 1.1rem;
+}
+
+.testimonial-author span {
+    color: #6b7280;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Contact Section */
+.contact {
+    padding: 100px 0;
+    background: white;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.contact-info h2 {
+    font-size: 2.5rem;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.contact-info h3 {
+    font-size: 1.8rem;
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.contact-info p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.contact-form {
+    background: #f9fafb;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Footer */
+.footer {
+    background: #1f2937;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #9ca3af;
+}
+
+.footer-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .nav-menu.active {
+        transform: translateY(0);
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .slide-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .slide-content p {
+        font-size: 1.2rem;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .bank-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .bank-card {
+        padding: 15px;
+    }
+
+    .bank-logo {
+        font-size: 0.8rem;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .stat-item {
+        padding: 20px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .models-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .model-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-brochure, .btn-pricelist, .btn-whatsapp {
+        max-width: 150px;
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .models-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .model-image {
+        height: 150px;
+    }
+    
+    .model-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .btn-brochure, .btn-pricelist, .btn-whatsapp {
+        max-width: 100%;
+        font-size: 11px;
+        padding: 8px 12px;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .top-bar-content {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .carousel-controls {
+        padding: 0 10px;
+    }
+
+    .carousel-btn {
+        font-size: 1.5rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .slide-content h1 {
+        font-size: 2rem;
+    }
+
+    .about-text h2,
+    .qualification-content h2,
+    .models h2,
+    .testimonials h2,
+    .contact-info h2 {
+        font-size: 2rem;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .model-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Hover effects */
+.model-card,
+.testimonial-card {
+    transition: all 0.3s ease;
+}
+
+.model-card:hover,
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Promotions Page Styles */
+.promotions-hero {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+}
+
+.promotions-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.promotions-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.breadcrumb {
+    background: #f9fafb;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.breadcrumb-nav a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-nav a:hover {
+    color: #dc2626;
+}
+
+.breadcrumb-nav .separator {
+    color: #9ca3af;
+}
+
+.breadcrumb-nav .current {
+    color: #374151;
+    font-weight: 500;
+}
+
+.promotions-content {
+    padding: 40px 0;
+    background: white;
+}
+
+/* Featured Promotion (Yaris) */
+.featured-promotion {
+    display: flex;
+    background: white;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.featured-car-image {
+    flex: 1;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    min-width: 0;
+}
+
+.featured-car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.featured-promotion-details {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.featured-promotion-details h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.monthly-installment {
+    margin-bottom: 25px;
+}
+
+.monthly-installment p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.installment-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000;
+    display: block;
+}
+
+.promo-value {
+    margin-bottom: 30px;
+}
+
+.promo-value p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.promo-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000;
+    display: block;
+}
+
+.featured-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.speak-advisor-btn {
+    background: white;
+    color: #000;
+    border: 2px solid #000;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.speak-advisor-btn:hover {
+    background: #000;
+    color: white;
+}
+
+.download-brochure {
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.download-brochure:hover {
+    color: #b91c1c;
+}
+
+/* Secondary Promotions */
+.secondary-promotions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.promotion-card {
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.car-image {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.car-image:hover img {
+    transform: scale(1.05);
+}
+
+.promotion-details {
+    padding: 25px;
+}
+
+.promotion-details h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.monthly-installment {
+    margin-bottom: 15px;
+}
+
+.monthly-installment p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.installment-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000;
+    display: block;
+}
+
+.promo-value {
+    margin-bottom: 20px;
+}
+
+.promo-value p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.promo-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000;
+    display: block;
+}
+
+.promotion-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.promotion-actions .speak-advisor-btn {
+    padding: 12px 20px;
+    font-size: 12px;
+}
+
+.promotion-actions .download-brochure {
+    font-size: 14px;
+}
+
+/* Hilux Promotion */
+.hilux-promotion {
+    display: flex;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.hilux-promotion .car-image {
+    flex: 1;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    min-width: 0;
+}
+
+.hilux-promotion .car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.hilux-promotion .car-image:hover img {
+    transform: scale(1.05);
+}
+
+.hilux-promotion .promotion-details {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hilux-promotion h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+.hilux-promotion .monthly-installment {
+    margin-bottom: 20px;
+}
+
+.hilux-promotion .installment-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.hilux-promotion .promo-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.additional-offer {
+    margin-bottom: 25px;
+}
+
+.additional-offer p {
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+}
+
+.hilux-promotion .promotion-actions {
+    flex-direction: row;
+    gap: 20px;
+}
+
+.hilux-promotion .speak-advisor-btn {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 14px;
+}
+
+.hilux-promotion .download-brochure {
+    flex: 1;
+    text-align: center;
+    padding: 15px 20px;
+    border: 2px solid #dc2626;
+    border-radius: 5px;
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.hilux-promotion .download-brochure:hover {
+    background: #dc2626;
+    color: white;
+}
+
+.promotions-contact {
+    background: #f9fafb;
+    padding: 60px 0;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.promotions-contact h2 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.promotions-contact p {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.phone-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #374151;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phone-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(55, 65, 81, 0.3);
+    color: white;
+}
+
+.fade-in {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Active state for navigation */
+.top-nav .nav-link.active {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* Responsive Design for Promotions */
+@media (max-width: 768px) {
+    .promotions-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .promotions-hero p {
+        font-size: 1rem;
+    }
+    
+    .featured-promotion {
+        flex-direction: column;
+    }
+    
+    .featured-car-image {
+        height: 250px;
+    }
+    
+    .featured-promotion-details {
+        padding: 25px;
+    }
+    
+    .featured-promotion-details h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    
+    .installment-amount,
+    .promo-amount {
+        font-size: 2rem;
+    }
+    
+    .secondary-promotions {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .hilux-promotion {
+        flex-direction: column;
+    }
+    
+    .hilux-promotion .car-image {
+        height: 250px;
+    }
+    
+    .hilux-promotion .promotion-details {
+        padding: 25px;
+    }
+    
+    .hilux-promotion h3 {
+        font-size: 1.5rem;
+    }
+    
+    .hilux-promotion .installment-amount,
+    .hilux-promotion .promo-amount {
+        font-size: 1.5rem;
+    }
+    
+    .hilux-promotion .promotion-actions {
+        flex-direction: column;
+    }
+    
+    .contact-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .whatsapp-btn,
+    .phone-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+/* Mobile Responsive for GR Featured Card */
+@media (max-width: 768px) {
+    .gr-featured-card {
+        flex-direction: column;
+    }
+
+    .gr-featured-image {
+        height: 250px;
+    }
+
+    .gr-featured-content {
+        padding: 30px 20px;
+    }
+
+    .gr-featured-content h3 {
+        font-size: 2rem;
+    }
+
+    .gr-featured-content .price {
+        font-size: 1.5rem;
+    }
+}
+
