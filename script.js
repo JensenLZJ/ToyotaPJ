@@ -3,6 +3,33 @@ let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel-slide');
 const dots = document.querySelectorAll('.dot');
 
+// FAQ functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all other FAQ items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            
+            // Toggle current item
+            if (isActive) {
+                item.classList.remove('active');
+            } else {
+                item.classList.add('active');
+            }
+        });
+    });
+});
+
 function showSlide(n) {
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
@@ -34,13 +61,15 @@ let slideInterval = setInterval(autoPlay, 5000);
 
 // Pause auto-play on hover
 const carousel = document.querySelector('.carousel');
-carousel.addEventListener('mouseenter', () => {
-    clearInterval(slideInterval);
-});
+if (carousel) {
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
 
-carousel.addEventListener('mouseleave', () => {
-    slideInterval = setInterval(autoPlay, 5000);
-});
+    carousel.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(autoPlay, 5000);
+    });
+}
 
 // PDF Loading Optimization
 document.addEventListener('DOMContentLoaded', () => {
@@ -89,19 +118,23 @@ document.addEventListener('DOMContentLoaded', () => {
 const mobileToggle = document.querySelector('.mobile-toggle');
 const navSection = document.querySelector('.nav-section');
 
-mobileToggle.addEventListener('click', () => {
-    navSection.classList.toggle('active');
-    mobileToggle.classList.toggle('active');
-});
+if (mobileToggle && navSection) {
+    mobileToggle.addEventListener('click', () => {
+        navSection.classList.toggle('active');
+        mobileToggle.classList.toggle('active');
+    });
+}
 
 // Close mobile menu when clicking on a link
 const navLinks = document.querySelectorAll('.nav-section a');
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navSection.classList.remove('active');
-        mobileToggle.classList.remove('active');
+if (navSection && mobileToggle) {
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navSection.classList.remove('active');
+            mobileToggle.classList.remove('active');
+        });
     });
-});
+}
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
