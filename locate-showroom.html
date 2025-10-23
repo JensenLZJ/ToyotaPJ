@@ -109,14 +109,6 @@
                 <!-- Google Maps Integration -->
                 <div class="neighborhood-discovery">
                     <div class="places-panel panel no-scroll">
-                        <header class="navbar">
-                            <div class="search-input">
-                                <input class="place-search-input" placeholder="Search nearby places">
-                                <button class="place-search-button">
-                                    <img src="https://fonts.gstatic.com/s/i/googlematerialicons/search/v11/24px.svg" alt="search"/>
-                                </button>
-                            </div>
-                        </header>
                         <div class="results">
                             <ul class="place-results-list"></ul>
                         </div>
@@ -339,51 +331,6 @@
         return capitalized.replace(/_/g, ' ');
       }
 
-      /** Initializes an array of zeros with the given size. */
-      function initArray(arraySize) {
-        const array = [];
-        while (array.length < arraySize) {
-          array.push(0);
-        }
-        return array;
-      }
-
-      /** Assigns star icons to an object given its rating (out of 5). */
-      function addStarIcons(obj) {
-        if (!obj.rating) return;
-        const starsOutOfTen = Math.round(2 * obj.rating);
-        const fullStars = Math.floor(starsOutOfTen / 2);
-        const halfStars = fullStars !== starsOutOfTen / 2 ? 1 : 0;
-        const emptyStars = 5 - fullStars - halfStars;
-
-        // Express stars as arrays to make iterating in Handlebars easy.
-        obj.fullStarIcons = initArray(fullStars);
-        obj.halfStarIcons = initArray(halfStars);
-        obj.emptyStarIcons = initArray(emptyStars);
-      }
-
-      /**
-       * Constructs an array of opening hours by day from a PlaceOpeningHours object,
-       * where adjacent days of week with the same hours are collapsed into one element.
-       */
-      function parseDaysHours(openingHours) {
-        const daysHours = openingHours.weekday_text.map((e) => e.split(/\:\s+/))
-                  .map((e) => ({'days': e[0].substr(0, 3), 'hours': e[1]}));
-
-        for (let i = 1; i < daysHours.length; i++) {
-          if (daysHours[i - 1].hours === daysHours[i].hours) {
-            if (daysHours[i - 1].days.indexOf('-') !== -1) {
-              daysHours[i - 1].days =
-                  daysHours[i - 1].days.replace(/\w+$/, daysHours[i].days);
-            } else {
-              daysHours[i - 1].days += ' - ' + daysHours[i].days;
-            }
-            daysHours.splice(i--, 1);
-          }
-        }
-        return daysHours;
-      }
-
       /** Number of POIs to show on widget load. */
       const ND_NUM_PLACES_INITIAL = 5;
 
@@ -421,7 +368,6 @@
 
         // Initialize additional capabilities ----------------------------------
 
-        initializeSearchInput();
         initializeDistanceMatrix();
         initializeDirections();
 
@@ -569,46 +515,11 @@
               }
               if (result.url) place.url = result.url;
 
-              // Contact details.
-              if (result.website) {
-                place.website = result.website;
-                const url = new URL(place.website);
-                place.websiteDomain = url.hostname;
-              }
-              if (result.formatted_phone_number) place.phoneNumber = result.formatted_phone_number;
-              if (result.opening_hours) place.openingHours = parseDaysHours(result.opening_hours);
-
-              // Review details.
-              if (result.rating) {
-                place.rating = result.rating;
-                addStarIcons(place);
-              }
-              if (result.user_ratings_total) place.numReviews = result.user_ratings_total;
-              if (result.price_level) {
-                place.priceLevel = result.price_level;
-                place.dollarSigns = initArray(result.price_level);
-              }
-              if (result.reviews) {
-                place.reviews = result.reviews;
-                for (let review of place.reviews) {
-                  addStarIcons(review);
-                }
-              }
-
               for (let field of missingFields) {
                 place.fetchedFields.add(field);
               }
               callback(place);
             };
-
-            // Use result from Place Autocomplete if available.
-            if (widget.placeIdsToAutocompleteResults) {
-              const autoCompleteResult = widget.placeIdsToAutocompleteResults.get(placeId);
-              if (autoCompleteResult) {
-                processResult(autoCompleteResult, google.maps.places.PlacesServiceStatus.OK);
-                return;
-              }
-            }
             detailsService.getDetails(request, processResult);
           };
         }
@@ -690,8 +601,6 @@
 
             widget.fetchPlaceDetails(placeId, [
               'name', 'types', 'geometry.location', 'formatted_address', 'photo', 'url',
-              'website', 'formatted_phone_number', 'opening_hours',
-              'rating', 'user_ratings_total', 'price_level', 'review',
             ], processResult);
           };
 
@@ -709,10 +618,6 @@
               });
               resultEl.querySelector('.name').addEventListener('click', (e) => {
                 widget.selectPlaceById(place.placeId, /* panToMarker= */ true);
-                e.stopPropagation();
-              });
-              resultEl.querySelector('.photo').addEventListener('click', (e) => {
-                showPhotoModal(place.photos[0], place.name);
                 e.stopPropagation();
               });
               widget.addPlaceMarker(place);
@@ -749,8 +654,6 @@
               };
               widget.fetchPlaceDetails(place.placeId, [
                 'name', 'types', 'geometry.location',
-                'photo',
-                'rating', 'user_ratings_total', 'price_level',
               ], processResult);
             }
           };
@@ -760,30 +663,6 @@
             placesPanelEl.classList.remove('no-scroll');
             showMoreButtonEl.classList.remove('sticky');
             showNextPlaces(ND_NUM_PLACES_SHOW_MORE);
-          });
-        }
-
-        /** Initializes Search Input for the widget. */
-        function initializeSearchInput() {
-          const searchInputEl = widgetEl.querySelector('.place-search-input');
-          widget.placeIdsToAutocompleteResults = new Map();
-
-          // Set up Autocomplete on the search input.
-          const autocomplete = new google.maps.places.Autocomplete(searchInputEl, {
-            types: ['establishment'],
-            fields: [
-              'place_id', 'name', 'types', 'geometry.location', 'formatted_address', 'photo', 'url',
-              'website', 'formatted_phone_number', 'opening_hours',
-              'rating', 'user_ratings_total', 'price_level', 'review',
-            ],
-            bounds: widget.mapBounds,
-            strictBounds: true,
-          });
-          autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
-            widget.placeIdsToAutocompleteResults.set(place.place_id, place);
-            widget.selectPlaceById(place.place_id, /* panToMarker= */ true);
-            searchInputEl.value = '';
           });
         }
 
@@ -849,9 +728,9 @@
 
       // Configuration for the map
       const CONFIGURATION = {
-        "capabilities": {"search":true,"distances":true,"directions":true,"contacts":true,"atmospheres":true,"thumbnails":true},
+        "capabilities": {"search":false,"distances":true,"directions":true,"contacts":false,"atmospheres":false,"thumbnails":false},
         "centerMarker": {"icon":"circle"},
-        "mapRadius": 4000,
+        "mapRadius": 2000,
         "mapOptions": {"center":{"lat":3.0634499,"lng":101.5232911},"fullscreenControl":true,"mapTypeControl":true,"streetViewControl":false,"zoom":16,"zoomControl":true,"maxZoom":20,"mapId":""},
         "mapsApiKey": "AIzaSyDvqMeX2GorX54EzxpUWXbpPQihp6YjRog",
         "pois": [
@@ -869,23 +748,7 @@
       };
 
       function initMap() {
-        // Check if API key is provided
-        if (!CONFIGURATION.mapsApiKey || CONFIGURATION.mapsApiKey === '') {
-          console.log('Google Maps API key not provided. Showing fallback map.');
-          return;
-        }
-        
-        try {
-          new NeighborhoodDiscovery(CONFIGURATION);
-        } catch (error) {
-          console.error('Error initializing Google Maps:', error);
-        }
-      }
-      
-      // Handle API key error
-      function gm_authFailure() {
-        console.log('Google Maps API key is invalid or has restrictions.');
-        // The fallback map is already visible by default
+        new NeighborhoodDiscovery(CONFIGURATION);
       }
     </script>
 
@@ -895,21 +758,8 @@
         <li class="place-result">
           <div class="text">
             <button class="name">{{name}}</button>
-            <div class="info">
-              {{#if rating}}
-                <span>{{rating}}</span>
-                <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star/v15/24px.svg" alt="rating" class="star-icon"/>
-              {{/if}}
-              {{#if numReviews}}
-                <span>&nbsp;({{numReviews}})</span>
-              {{/if}}
-              {{#if priceLevel}}
-                &#183;&nbsp;<span>{{#each dollarSigns}}${{/each}}&nbsp;</span>
-              {{/if}}
-            </div>
             <div class="info">{{type}}</div>
           </div>
-          <button class="photo" style="background-image:url({{photos.0.urlSmall}})" aria-label="show photo in viewer"></button>
         </li>
       {{/each}}
     </script>
@@ -923,31 +773,7 @@
       <header>
         <h2>{{name}}</h2>
         <div class="info">
-          {{#if rating}}
-            <span class="star-rating-numeric">{{rating}}</span>
-            <span>
-              {{#each fullStarIcons}}
-                <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star/v15/24px.svg" alt="full star" class="star-icon"/>
-              {{/each}}
-              {{#each halfStarIcons}}
-                <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star_half/v17/24px.svg" alt="half star" class="star-icon"/>
-              {{/each}}
-              {{#each emptyStarIcons}}
-                <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star_outline/v9/24px.svg" alt="empty star" class="star-icon"/>
-              {{/each}}
-            </span>
-          {{/if}}
-          {{#if numReviews}}
-            <a href="{{url}}" target="_blank">{{numReviews}} reviews</a>
-          {{else}}
-            <a href="{{url}}" target="_blank">See on Google Maps</a>
-          {{/if}}
-          {{#if priceLevel}}
-            &#183;
-            <span class="price-dollars">
-              {{#each dollarSigns}}${{/each}}
-            </span>
-          {{/if}}
+          <a href="{{url}}" target="_blank">See on Google Maps</a>
         </div>
         {{#if type}}
           <div class="info">{{type}}</div>
@@ -968,68 +794,11 @@
             </div>
           </div>
         {{/if}}
-        {{#if website}}
-          <div class="contact">
-            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/public/v10/24px.svg" alt="Website" class="icon"/>
-            <div class="text">
-              <a href="{{website}}" target="_blank">{{websiteDomain}}</a>
-            </div>
-          </div>
-        {{/if}}
-        {{#if phoneNumber}}
-          <div class="contact">
-            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/phone/v10/24px.svg" alt="Phone number" class="icon"/>
-            <div class="text">
-              {{phoneNumber}}
-            </div>
-          </div>
-        {{/if}}
-        {{#if openingHours}}
-          <div class="contact">
-            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/schedule/v12/24px.svg" alt="Opening hours" class="icon"/>
-            <div class="text">
-              {{#each openingHours}}
-                <div>
-                  <span class="weekday">{{days}}</span>
-                  <span class="hours">{{hours}}</span>
-                </div>
-              {{/each}}
-            </div>
-          </div>
-        {{/if}}
       </div>
       {{#if photos}}
         <div class="photos section">
           {{#each photos}}
-            <button class="photo" style="background-image:url({{urlSmall}})" aria-label="show photo in viewer"></button>
-          {{/each}}
-        </div>
-      {{/if}}
-      {{#if reviews}}
-        <div class="reviews section">
-          <p class="attribution">Reviews by Google users</p>
-          {{#each reviews}}
-            <div class="review">
-              <a class="reviewer-identity" href="{{author_url}}" target="_blank">
-                <div class="reviewer-avatar" style="background-image:url({{profile_photo_url}})"></div>
-                <div class="reviewer-name">{{author_name}}</div>
-              </a>
-              <div class="rating info">
-                <span>
-                  {{#each fullStarIcons}}
-                    <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star/v15/24px.svg" alt="full star" class="star-icon"/>
-                  {{/each}}
-                  {{#each halfStarIcons}}
-                    <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star_half/v17/24px.svg" alt="half star" class="star-icon"/>
-                  {{/each}}
-                  {{#each emptyStarIcons}}
-                    <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star_outline/v9/24px.svg" alt="empty star" class="star-icon"/>
-                  {{/each}}
-                </span>
-                <span class="review-time">{{relative_time_description}}</span>
-              </div>
-              <div class="info">{{text}}</div>
-            </div>
+            <button class="photo" style="background-image:url({{urlLarge}})" aria-label="show photo in viewer"></button>
           {{/each}}
         </div>
       {{/if}}
@@ -1043,7 +812,7 @@
     </script>
 
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvqMeX2GorX54EzxpUWXbpPQihp6YjRog&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_neighborhooddiscovery_v3_cABCDEF" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvqMeX2GorX54EzxpUWXbpPQihp6YjRog&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_neighborhooddiscovery_v3_cBC" async defer></script>
     
     <script src="script.js" defer></script>
 </body>
