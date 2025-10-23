@@ -42,6 +42,37 @@ carousel.addEventListener('mouseleave', () => {
     slideInterval = setInterval(autoPlay, 5000);
 });
 
+// PDF Loading Optimization
+document.addEventListener('DOMContentLoaded', () => {
+    // Add loading indicators for PDF links
+    const pdfLinks = document.querySelectorAll('a[href$=".pdf"]');
+    
+    pdfLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Add loading state
+            const originalText = this.textContent;
+            this.textContent = 'Loading...';
+            this.style.opacity = '0.7';
+            this.style.pointerEvents = 'none';
+            
+            // Create a temporary link to preload the PDF
+            const tempLink = document.createElement('a');
+            tempLink.href = this.href;
+            tempLink.target = '_blank';
+            tempLink.style.display = 'none';
+            document.body.appendChild(tempLink);
+            
+            // Reset button after a short delay
+            setTimeout(() => {
+                this.textContent = originalText;
+                this.style.opacity = '1';
+                this.style.pointerEvents = 'auto';
+                document.body.removeChild(tempLink);
+            }, 2000);
+        });
+    });
+});
+
 // Explore button functionality
 document.addEventListener('DOMContentLoaded', () => {
     const exploreBtn = document.querySelector('.explore-btn');
